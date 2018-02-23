@@ -37,7 +37,8 @@
     function handleSelectedRowsChanged(e, args) {
       var UID = createUID();
       var selectedRows = _grid.getSelectedRows();
-      var lookup = {}, row, i;
+      var lookup = {},
+        row, i;
       for (i = 0; i < selectedRows.length; i++) {
         row = selectedRows[i];
         lookup[row] = true;
@@ -91,7 +92,7 @@
     function toggleRowSelection(row) {
       if (_selectedRowsLookup[row]) {
         _grid.setSelectedRows($.grep(_grid.getSelectedRows(), function (n) {
-          return n != row
+          return n != row;
         }));
       } else {
         _grid.setSelectedRows(_grid.getSelectedRows().concat(row));
@@ -101,8 +102,9 @@
     }
 
     function selectRows(rowArray) {
-      var i, l=rowArray.length, addRows = [];
-      for(i=0; i<l; i++) {
+      var i, l = rowArray.length,
+        addRows = [];
+      for (i = 0; i < l; i++) {
         if (!_selectedRowsLookup[rowArray[i]]) {
           addRows[addRows.length] = rowArray[i];
         }
@@ -111,14 +113,15 @@
     }
 
     function deSelectRows(rowArray) {
-      var i, l=rowArray.length, removeRows = [];
-      for(i=0; i<l; i++) {
+      var i, l = rowArray.length,
+        removeRows = [];
+      for (i = 0; i < l; i++) {
         if (_selectedRowsLookup[rowArray[i]]) {
           removeRows[removeRows.length] = rowArray[i];
         }
       }
       _grid.setSelectedRows($.grep(_grid.getSelectedRows(), function (n) {
-        return removeRows.indexOf(n)<0
+        return removeRows.indexOf(n) < 0;
       }));
     }
 
@@ -140,8 +143,9 @@
         } else {
           _grid.setSelectedRows([]);
         }
-        e.stopPropagation();
-        e.stopImmediatePropagation();
+        // Code remove to use grid onHeaderClick
+        // e.stopPropagation();
+        // e.stopImmediatePropagation();
       }
     }
 
@@ -151,7 +155,7 @@
       if (_checkboxColumnCellIndex === null) {
         _checkboxColumnCellIndex = 0;
         var colArr = _grid.getColumns();
-        for (var i=0; i < colArr.length; i++) {
+        for (var i = 0; i < colArr.length; i++) {
           if (colArr[i].id == _options.columnId) {
             _checkboxColumnCellIndex = i;
           }
@@ -184,9 +188,9 @@
       var UID = createUID() + row;
 
       if (dataContext) {
-        return _selectedRowsLookup[row]
-            ? "<input id='selector" + UID + "' type='checkbox' checked='checked'><label for='selector" + UID + "'></label>"
-            : "<input id='selector" + UID + "' type='checkbox'><label for='selector" + UID + "'></label>";
+        return _selectedRowsLookup[row] ?
+          "<input id='selector" + UID + "' type='checkbox' checked='checked'><label for='selector" + UID + "'></label>" :
+          "<input id='selector" + UID + "' type='checkbox'><label for='selector" + UID + "'></label>";
       }
       return null;
     }
