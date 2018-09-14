@@ -66,6 +66,8 @@
 
       // destroy the picker if user leaves the page
       $(window).on("beforeunload", destroy);
+
+      hideColumnsNotVisible();
     }
 
     function destroy() {
@@ -94,7 +96,7 @@
         $input = $("<input type='checkbox' />").data("column-id", columns[i].id);
         columnCheckboxes.push($input);
 
-        if (grid.getColumnIndex(columns[i].id) != null) {
+        if (grid.getColumnIndex(columns[i].id) != null && (columns[i].visible === undefined || columns[i].visible)) {
           $input.attr("checked", "checked");
         }
 
@@ -201,6 +203,10 @@
         grid.setColumns(visibleColumns);
         onColumnsChanged.notify({columns: visibleColumns, grid: grid});
       }
+    }
+
+    function hideColumnsNotVisible() {
+      grid.setColumns(columns.filter(item => item.visible === undefined || item.visible));
     }
 
     function getAllColumns() {
